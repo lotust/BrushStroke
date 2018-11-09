@@ -3,16 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "hanzi-writer": "^1.1.0",
+    "body-parser": "^1.18.3",
+    "dolphinsr": "0.0.2",
+    "express": "^4.16.4",
+    "hanzi-writer": "^1.2.0",
+    "mongoose": "^5.3.10",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "supermemo2": "^1.0.2",
+    "volleyball": "^1.5.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start-dev": "npm run build-watch & npm run start-server",
+    "start-server": "nodemon index.js -e html,js,css --ignore public",
+    "build-watch": "webpack -w",
+    "test": "NODE_ENV='test' mocha  ./tests --recursive --watch --require babel-polyfill --require babel-register",
+    "start": "echo 'Running server for production - developers, use npm run start-dev for development' && node index.js",
+    "seed": "node seed.js"
   },
   "eslintConfig": {
     "extends": "react-app"
