@@ -2,16 +2,17 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Reviews = db.define('reviews', {
-  master: {
-    type: Sequelize.INTEGER
+  factor: {
+    type: Sequelize.DECIMAL(6, 3)
   },
-  ts: {
-    type: Sequelize.DATE,
-    defaultValue: new Date()
+  schedule: {
+    type: Sequelize.DECIMAL(6, 3)
   },
-  rating: {
-    type: Sequelize.ENUM(['easy', 'good', 'hard', 'again']),
-    defaultValue: 'again'
+  isRepeatAgain: {
+    type: Sequelize.BOOLEAN
+  },
+  character: {
+    type: Sequelize.STRING
   }
 })
 
