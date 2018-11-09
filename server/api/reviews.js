@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User, Reviews, DictionaryHSK1} = require('../db/models')
+const fs = require('fs')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -65,5 +66,25 @@ router.put('/', async (req, res, next) => {
     next(err)
   }
 })
+
+// router.put('/', async (req, res, next) => {
+//   try {
+//     console.log(req.body)
+//     const currentRow = await Reviews.find({
+//       where: {character: req.body.char, userId: req.user.id}
+//     })
+//     const affectedRow = currentRow.update(
+//       {
+//         factor: req.body.factor,
+//         schedule: req.body.schedule,
+//         isRepeatAgain: req.body.isRepeatAgain
+//       },
+//       {fields: ['factor', 'schedule', 'isRepeatAgain']}
+//     )
+//     res.status(201).json(affectedRow)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 module.exports = router

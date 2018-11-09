@@ -8,14 +8,13 @@ import HanziWriter from 'hanzi-writer'
 
 class HanziQuiz extends Component {
   state = {
-    totalStrokes: 0,
-    reviewData: {}
+    totalStrokes: 0
   }
   componentDidMount() {
     this.props.getReviews()
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.reviews !== this.props.reviews) {
       const word = this.props.reviews[0]
       const writer = HanziWriter.create(
@@ -35,10 +34,13 @@ class HanziQuiz extends Component {
           this.setState({totalStrokes: this.state.totalStrokes + 1})
         },
         onComplete: summaryData => {
+          const quality =
+            1 - summaryData.totalMistakes / this.state.totalStrokes
+          console.log(quality)
           const score = reviewer(
-            4.999 * (1 - summaryData.totalMistakes / this.state.totalStrokes),
-            this.props.reviews[0].schedule,
-            this.props.reviews[0].factor
+            5 * quality,
+            Number(this.props.reviews[0].schedule),
+            Number(this.props.reviews[0].factor)
           )
           console.log(score)
           this.props.updateReview({
@@ -67,7 +69,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getReviews: () => dispatch(getReviewsThunk()),
-    updateReview: data => dispatch(updateReviewThunk())
+    updateReview: data => dispatch(updateReviewThunk(data))
   }
 }
 

@@ -53,6 +53,7 @@ export const addReviewThunk = quizdata => async dispatch => {
 export const updateReviewThunk = quizdata => async dispatch => {
   try {
     const {data} = await axios.put('/api/reviews', quizdata)
+    console.log(quizdata)
     dispatch(updateReview(data))
   } catch (err) {
     console.error(err)
@@ -76,10 +77,10 @@ const handlers = {
       review => review.id === action.review.id
     )
     const newArr = [...state]
-    newArr.splice(updatedReviewIdx, 1, action.review).sort((a, b) => {
+    newArr.splice(updatedReviewIdx, 1, action.review)
+    return newArr.sort((a, b) => {
       return a.quality - b.quality
     })
-    return newArr
   },
   [CLEAR_REVIEWS]: () => {
     return []
