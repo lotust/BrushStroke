@@ -29,7 +29,7 @@ describe('Review routes', () => {
       return await Reviews.create(fakeReview)
     })
 
-    it('GET /api/reviews responds with all reviews', async () => {
+    xit('GET /api/reviews responds with all reviews for a logged in user', async () => {
       const res = await request(app)
         .get('/api/reviews')
         .expect(200)
@@ -68,6 +68,8 @@ describe('Review routes', () => {
         })
         .expect(201)
       const newreview = await Reviews.findById(res.body.id)
+      const reviews = await Reviews.findAll({where: {character: '我'}})
+      expect(reviews.length).to.be.equal(1)
       expect(newreview.character).to.be.equal('我')
       expect(newreview.factor).to.be.equal((1.932).toString())
     })
