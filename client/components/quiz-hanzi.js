@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
+import {default as reviewer} from '../functions'
 import {getReviewsThunk, updateReviewThunk} from '../store/reviews'
 
 // const DolphinSR = require('dolphinsr');
@@ -8,7 +8,8 @@ import HanziWriter from 'hanzi-writer'
 
 class HanziQuiz extends Component {
   state = {
-    strokes: 0
+    totalStrokes: 0,
+    reviewData: {}
   }
   componentDidMount() {
     this.props.getReviews()
@@ -29,44 +30,44 @@ class HanziQuiz extends Component {
         }
       )
       writer.quiz({
-        onMistake: strokeData => {
-          this.setState({
-            strokes:
-              strokeData.strokesRemaining > this.state.strokes
-                ? strokeData.strokesRemaining
-                : this.state.strokes
-          })
-        },
-        onCorrectStroke: strokeData => {
-          this.setState({
-            strokes:
-              strokeData.strokesRemaining > this.state.strokes
-                ? strokeData.strokesRemaining
-                : this.state.strokes
-          })
+        onCorrectStroke: strokes => {
+          // this.setState({mistakeStrokes: this.state.mistakeStrokes + strokes.mistakesOnStroke})
+          this.setState({totalStrokes: this.state.totalStrokes + 1})
         },
         onComplete: summaryData => {
-          console.log(summaryData.totalMistakes)
+          const score = reviewer(
+            4.999 * (1 - summaryData.totalMistakes / this.state.totalStrokes),
+            this.props.reviews[0].schedule,
+            this.props.reviews[0].factor
+          )
+          console.log(score)
+          this.props.updateReview({
+            ...score,
+            char: word.character
+          })
         }
       })
     }
   }
+
   render() {
     return (
       <div>
-        Quiz rendered character:<div id="character-target-div" />
+        <div id="character-target-div" />
+        <div onClick={() => this.handleClick}> Load new Character </div>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return {reviews: state.reviews}
+  return {reviews: state.reviews, user: state.user}
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getReviews: () => dispatch(getReviewsThunk())
+    getReviews: () => dispatch(getReviewsThunk()),
+    updateReview: data => dispatch(updateReviewThunk())
   }
 }
 
