@@ -82,18 +82,24 @@ class HanziQuiz extends Component {
       <div className={container}>
         <Paper id="character-target-div" />
         <br />
+        <br />
         <Typography variant="h6" component="h3">
           Pronunciation:
         </Typography>
         <Typography variant="h5" component="h2">
           {pinyin}
         </Typography>
+
+        <br />
+        <br />
         <Typography variant="h6" component="h3">
           Definition:
         </Typography>
         <Typography variant="h5" component="h2">
           {definition}
         </Typography>
+        <br />
+        <br />
         <Button type="submit" className={button} onClick={this.nextCard}>
           Next Card
         </Button>
