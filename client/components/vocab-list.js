@@ -12,12 +12,13 @@ import Paper from '@material-ui/core/Paper'
 
 const styles = theme => ({
   root: {
-    width: '100vw',
-    marginBottom: '30'
+    width: '100vw'
   },
   table: {
     minWidth: '100%',
-    minHeight: '100%'
+    minHeight: '100%',
+    marginLeft: 10,
+    marginBottom: 40
   },
   row: {
     minHeight: '15vh'
