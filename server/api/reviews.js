@@ -15,7 +15,9 @@ router.get('/', async (req, res, next) => {
             factor: 2.0,
             schedule: 2.5,
             isRepeatAgain: true,
-            userId: req.user.id
+            userId: req.user.id,
+            pinyin: char.TonalPinYin,
+            definition: char.Definition
           })
         })
         setTimeout(async () => {

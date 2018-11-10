@@ -17,14 +17,14 @@ class HanziQuiz extends Component {
       element.removeChild(element.firstChild)
     }
     this.props.updateReview({...this.state.quizScore})
-    this.hanziload()
+    // this.hanziload()
   }
 
   hanziload = {
     load: () => {
       let word = this.props.reviews[0]
       let character = word.character.split('')
-      character.forEach((elem, i) => {
+      character.forEach(elem => {
         const writer = HanziWriter.create('character-target-div', elem, {
           width: 250,
           height: 250,
@@ -33,7 +33,7 @@ class HanziQuiz extends Component {
           showOutline: true
         })
         writer.quiz({
-          onCorrectStroke: strokes => {
+          onCorrectStroke: () => {
             this.setState({totalStrokes: this.state.totalStrokes + 1})
           },
           onComplete: summaryData => {
@@ -62,9 +62,12 @@ class HanziQuiz extends Component {
   }
 
   render() {
+    const {pinyin, definition} = this.props.reviews[0]
     return (
       <div>
         <div id="character-target-div" />
+        <div>{pinyin}</div>
+        <div>{definition}</div>
         <button type="submit" onClick={this.nextCard}>
           Next Card
         </button>

@@ -13,6 +13,12 @@ const Reviews = db.define('reviews', {
   },
   character: {
     type: Sequelize.STRING
+  },
+  pinyin: {
+    type: Sequelize.STRING
+  },
+  definition: {
+    type: Sequelize.STRING
   }
 })
 
