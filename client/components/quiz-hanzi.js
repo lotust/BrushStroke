@@ -30,7 +30,7 @@ class HanziQuiz extends Component {
           height: 250,
           showCharacter: false,
           padding: 5,
-          showOutline: true
+          showOutline: false
         })
         writer.quiz({
           onCorrectStroke: () => {
