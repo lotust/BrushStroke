@@ -4,9 +4,7 @@ const fs = require('fs')
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log('req user id > ', req.user.id)
     let reviews = await Reviews.findAll({where: {userId: req.user.id}})
-    console.log('reviews : ', reviews)
     if (!reviews || reviews.length <= 0) {
       fs.readFile('script/dictionaryHSK1.json', async (err, data) => {
         if (err) throw err
@@ -14,7 +12,7 @@ router.get('/', async (req, res, next) => {
         await dictionaryHSK1.forEach(async char => {
           await Reviews.create({
             character: char.Traditional,
-            factor: 2.5,
+            factor: 2.0,
             schedule: 2.5,
             isRepeatAgain: true,
             userId: req.user.id
@@ -22,9 +20,8 @@ router.get('/', async (req, res, next) => {
         })
         setTimeout(async () => {
           reviews = await Reviews.findAll({where: {userId: req.user.id}})
-          console.log('reviews after the if: ', reviews)
           res.json(reviews)
-        }, 1)
+        }, 4)
       })
     } else {
       res.json(reviews)

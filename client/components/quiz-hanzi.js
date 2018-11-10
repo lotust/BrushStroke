@@ -7,40 +7,46 @@ import HanziWriter from 'hanzi-writer'
 
 class HanziQuiz extends Component {
   state = {
-    totalStrokes: 0
+    totalStrokes: 0,
+    quizScore: {}
+  }
+
+  nextCard = () => {
+    const element = document.getElementById('character-target-div')
+    while (element.firstChild) {
+      element.removeChild(element.firstChild)
+    }
+    this.props.updateReview({...this.state.quizScore})
+    this.hanziload()
   }
 
   hanziload = {
     load: () => {
-      const word = this.props.reviews[0]
-      const writer = HanziWriter.create(
-        'character-target-div',
-        word.character,
-        {
+      let word = this.props.reviews[0]
+      let character = word.character.split('')
+      character.forEach((elem, i) => {
+        const writer = HanziWriter.create('character-target-div', elem, {
           width: 250,
           height: 250,
           showCharacter: false,
           padding: 5,
           showOutline: true
-        }
-      )
-      writer.quiz({
-        onCorrectStroke: strokes => {
-          this.setState({totalStrokes: this.state.totalStrokes + 1})
-        },
-        onComplete: summaryData => {
-          const quality =
-            1 - summaryData.totalMistakes / this.state.totalStrokes
-          const score = reviewer(
-            5 * quality,
-            Number(this.props.reviews[0].schedule),
-            Number(this.props.reviews[0].factor)
-          )
-          this.props.updateReview({
-            ...score,
-            char: word.character
-          })
-        }
+        })
+        writer.quiz({
+          onCorrectStroke: strokes => {
+            this.setState({totalStrokes: this.state.totalStrokes + 1})
+          },
+          onComplete: summaryData => {
+            const quality =
+              1 - summaryData.totalMistakes / this.state.totalStrokes
+            const score = reviewer(
+              5 * quality,
+              Number(this.props.reviews[0].schedule),
+              Number(this.props.reviews[0].factor)
+            )
+            this.setState({quizScore: {...score, char: word.character}})
+          }
+        })
       })
     }
   }
@@ -59,6 +65,9 @@ class HanziQuiz extends Component {
     return (
       <div>
         <div id="character-target-div" />
+        <button type="submit" onClick={this.nextCard}>
+          Next Card
+        </button>
       </div>
     )
   }
