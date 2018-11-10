@@ -12,8 +12,8 @@ router.get('/', async (req, res, next) => {
         await dictionaryHSK1.forEach(async char => {
           await Reviews.create({
             character: char.Traditional,
-            factor: 2.0,
-            schedule: 2.5,
+            factor: 1.5,
+            schedule: 1.5,
             isRepeatAgain: true,
             userId: req.user.id,
             pinyin: char.TonalPinYin,

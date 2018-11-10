@@ -7,15 +7,19 @@ import HomeIcon from '@material-ui/icons/Home'
 import List from '@material-ui/icons/List'
 import Search from '@material-ui/icons/Search'
 
+import {Link} from 'react-router-dom'
+
 const styles = {
   root: {
-    width: 500
+    width: '100%',
+    position: 'fixed',
+    bottom: 0
   }
 }
 
 class SimpleBottomNavigation extends React.Component {
   state = {
-    value: 0
+    value: null
   }
 
   handleChange = (event, value) => {
@@ -33,9 +37,24 @@ class SimpleBottomNavigation extends React.Component {
         showLabels
         className={classes.root}
       >
-        <BottomNavigationAction label="All" icon={<List />} />
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Search" icon={<Search />} />
+        <BottomNavigationAction
+          label="All"
+          icon={<List />}
+          component={Link}
+          to="/all"
+        />
+        <BottomNavigationAction
+          label="Home"
+          icon={<HomeIcon />}
+          component={Link}
+          to="/home"
+        />
+        <BottomNavigationAction
+          label="Search"
+          icon={<Search />}
+          component={Link}
+          to="/search"
+        />
       </BottomNavigation>
     )
   }
