@@ -4,16 +4,20 @@ import {HanziQuiz} from './index'
 import {getReviewsThunk} from '../store/reviews'
 
 class QuizLoader extends Component {
-  componentDidMount() {
-    this.props.getReviews()
+  async componentDidMount() {
+    await this.props.getReviews()
   }
   render() {
-    return <HanziQuiz reviews={this.props.reviews} />
+    if (this.props.reviews.length)
+      return <HanziQuiz reviews={this.props.reviews} />
+    else {
+      return <div>nothing to display</div>
+    }
   }
 }
 
 const mapStateToProps = state => {
-  return {reviews: state.reviews, user: state.user}
+  return {reviews: state.reviews}
 }
 
 const mapDispatchToProps = dispatch => {

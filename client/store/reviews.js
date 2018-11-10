@@ -63,13 +63,13 @@ export const updateReviewThunk = quizdata => async dispatch => {
 const handlers = {
   [GET_REVIEWS]: (state, action) => {
     return action.reviews.sort((a, b) => {
-      return a.quality - b.quality
+      return a.factor - b.factor
     })
   },
   [ADD_REVIEW]: (state, action) => {
     let newArr = [...state, action.review]
     newArr.sort((a, b) => {
-      return a.quality - b.quality
+      return a.factor - b.factor
     })
   },
   [UPDATE_REVIEW]: (state, action) => {
@@ -79,7 +79,7 @@ const handlers = {
     const newArr = [...state]
     newArr.splice(updatedReviewIdx, 1, action.review)
     return newArr.sort((a, b) => {
-      return a.quality - b.quality
+      return a.factor - b.factor
     })
   },
   [CLEAR_REVIEWS]: () => {

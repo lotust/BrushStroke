@@ -31,6 +31,6 @@ export default function reviewAssigner(quality, lastSchedule, lastFactor) {
   return {
     factor: newFac,
     schedule: curSchedule,
-    isRepeatAgain: quality < 4
+    isRepeatAgain: quality < 4.7
   }
 }

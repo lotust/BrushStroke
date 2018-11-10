@@ -4,13 +4,14 @@ const fs = require('fs')
 
 router.get('/', async (req, res, next) => {
   try {
+    console.log('req user id > ', req.user.id)
     let reviews = await Reviews.findAll({where: {userId: req.user.id}})
-    if (!reviews || !reviews.length) {
-      fs.readFile('script/dictionaryHSK1.json', (err, data) => {
+    console.log('reviews : ', reviews)
+    if (!reviews || reviews.length <= 0) {
+      fs.readFile('script/dictionaryHSK1.json', async (err, data) => {
         if (err) throw err
         const dictionaryHSK1 = JSON.parse(data)
-        console.log(dictionaryHSK1)
-        dictionaryHSK1.forEach(async char => {
+        await dictionaryHSK1.forEach(async char => {
           await Reviews.create({
             character: char.Traditional,
             factor: 2.5,
@@ -19,9 +20,12 @@ router.get('/', async (req, res, next) => {
             userId: req.user.id
           })
         })
+        setTimeout(async () => {
+          reviews = await Reviews.findAll({where: {userId: req.user.id}})
+          console.log('reviews after the if: ', reviews)
+          res.json(reviews)
+        }, 1)
       })
-      reviews = await Reviews.findAll({where: {userId: req.user.id}})
-      res.json(reviews)
     } else {
       res.json(reviews)
     }
