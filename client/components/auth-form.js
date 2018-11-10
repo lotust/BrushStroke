@@ -2,35 +2,57 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-
+import {withStyles} from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
-import {Form} from 'semantic-ui-react'
-
-const style = {
-  color: 'white',
-  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
-}
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 230
+  },
+  button: {
+    color: 'white',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    marginLeft: theme.spacing.unit
+  }
+})
 
 const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+  const {name, displayName, handleSubmit, error, classes} = props
 
   return (
-    <div>
-      <Form onSubmit={handleSubmit} name={name}>
-        <Form.Field>
-          <label htmlFor="email">Email</label>
-          <input name="email" placeholder="Email" />
-        </Form.Field>
-        <Form.Field>
-          <label htmlFor="password">Password</label>
-          <input name="password" placeholder="Password" />
-        </Form.Field>
-        <Button type="submit" style={style}>
+    <div className={classes.container}>
+      <form onSubmit={handleSubmit} name={name}>
+        <TextField
+          required
+          id="standard-required"
+          label="Email (required)"
+          placeholder="Email"
+          className={classes.textField}
+          margin="normal"
+          name="email"
+        />
+        <br />
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          className={classes.textField}
+          type="password"
+          margin="normal"
+          name="password"
+        />
+        <br />
+        <Button type="submit" className={classes.button}>
           {displayName}
         </Button>
         {error && error.response && <div> {error.response.data} </div>}
-      </Form>
+      </form>
       {/* <a href="/auth/google">{displayName} with Google</a> */}
     </div>
   )
@@ -39,7 +61,7 @@ const AuthForm = props => {
 const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'Login',
+    displayName: 'Log In',
     error: state.user.error
   }
 }
@@ -64,8 +86,12 @@ const mapDispatch = dispatch => {
   }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = withStyles(styles)(
+  connect(mapLogin, mapDispatch)(AuthForm)
+)
+export const Signup = withStyles(styles)(
+  connect(mapSignup, mapDispatch)(AuthForm)
+)
 
 /**
  * PROP TYPES

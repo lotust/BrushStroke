@@ -18,7 +18,7 @@ const backgroundStyle = {
 
 const Navbar = ({handleClick, isLoggedIn, classes}) => {
   return (
-    <div>
+    <div style={{marginBottom: '8vh'}}>
       <AppBar style={backgroundStyle}>
         <Toolbar>
           {isLoggedIn ? (

@@ -18,7 +18,8 @@ const styles = theme => ({
     minWidth: '100vw',
     minHeight: '100%',
     marginTop: '9vh',
-    marginBottom: '9vh'
+    marginBottom: '9vh',
+    padding: 20
   },
   row: {
     minHeight: '15vh'

@@ -1,16 +1,34 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {default as reviewer} from '../functions'
+import Button from '@material-ui/core/Button'
 import {getReviewsThunk, updateReviewThunk} from '../store/reviews'
-
 import HanziWriter from 'hanzi-writer'
+import {withStyles} from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+
+const styles = theme => ({
+  button: {
+    color: 'white',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    marginLeft: theme.spacing.unit
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: '10vh',
+    marginBottom: '10vh',
+    padding: 10
+  }
+})
 
 class HanziQuiz extends Component {
   state = {
     totalStrokes: 0,
     quizScore: {}
   }
-
   nextCard = () => {
     const element = document.getElementById('character-target-div')
     while (element.firstChild) {
@@ -19,15 +37,14 @@ class HanziQuiz extends Component {
     this.props.updateReview({...this.state.quizScore})
     // this.hanziload()
   }
-
   hanziload = {
     load: () => {
       let word = this.props.reviews[0]
       let character = word.character.split('')
       character.forEach(elem => {
         const writer = HanziWriter.create('character-target-div', elem, {
-          width: 250,
-          height: 250,
+          width: 270,
+          height: 270,
           showCharacter: false,
           padding: 5,
           showOutline: false
@@ -50,27 +67,36 @@ class HanziQuiz extends Component {
       })
     }
   }
-
   componentDidMount() {
     this.hanziload.load()
   }
-
   componentDidUpdate(prevProps) {
     if (prevProps.reviews !== this.props.reviews) {
       this.hanziload.load()
     }
   }
-
   render() {
     const {pinyin, definition} = this.props.reviews[0]
+    const {button, container} = this.props.classes
     return (
-      <div>
-        <div id="character-target-div" />
-        <div>{pinyin}</div>
-        <div>{definition}</div>
-        <button type="submit" onClick={this.nextCard}>
+      <div className={container}>
+        <Paper id="character-target-div" />
+        <br />
+        <Typography variant="h6" component="h3">
+          Pronunciation:
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {pinyin}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Definition:
+        </Typography>
+        <Typography variant="h5" component="h2">
+          {definition}
+        </Typography>
+        <Button type="submit" className={button} onClick={this.nextCard}>
           Next Card
-        </button>
+        </Button>
       </div>
     )
   }
@@ -87,4 +113,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HanziQuiz)
+export default withStyles(styles)(
+  connect(mapStateToProps, mapDispatchToProps)(HanziQuiz)
+)
