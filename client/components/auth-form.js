@@ -3,16 +3,20 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 
-import {Button, Checkbox, Form} from 'semantic-ui-react'
+import Button from '@material-ui/core/Button'
 
-/**
- * COMPONENT
- */
+import {Form} from 'semantic-ui-react'
+
+const style = {
+  color: 'white',
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+}
+
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <React.Fragment>
+    <div>
       <Form onSubmit={handleSubmit} name={name}>
         <Form.Field>
           <label htmlFor="email">Email</label>
@@ -22,11 +26,13 @@ const AuthForm = props => {
           <label htmlFor="password">Password</label>
           <input name="password" placeholder="Password" />
         </Form.Field>
-        <Button type="submit">{displayName}</Button>
+        <Button type="submit" style={style}>
+          {displayName}
+        </Button>
         {error && error.response && <div> {error.response.data} </div>}
       </Form>
-      <a href="/auth/google">{displayName} with Google</a>
-    </React.Fragment>
+      {/* <a href="/auth/google">{displayName} with Google</a> */}
+    </div>
   )
 }
 

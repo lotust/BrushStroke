@@ -15,10 +15,10 @@ const styles = theme => ({
     width: '100vw'
   },
   table: {
-    minWidth: '100%',
+    minWidth: '100vw',
     minHeight: '100%',
-    marginLeft: 10,
-    marginBottom: 40
+    marginTop: '9vh',
+    marginBottom: '9vh'
   },
   row: {
     minHeight: '15vh'
