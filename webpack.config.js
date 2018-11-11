@@ -1,4 +1,5 @@
 const isDev = process.env.NODE_ENV === 'development'
+const path = require('path')
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -7,7 +8,7 @@ module.exports = {
     './client/index.js'
   ],
   output: {
-    path: __dirname,
+    path: path.join(__dirname, 'www'),
     filename: './public/bundle.js'
   },
   resolve: {
