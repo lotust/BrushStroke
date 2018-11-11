@@ -1699,7 +1699,9 @@ var startApp = function startApp() {
 };
 
 if (window.cordova) {
-  document.addEventListener('deviceready', startApp, false);
+  document.addEventListener('deviceready', function () {
+    startApp();
+  }, false);
 } else {
   startApp();
 }
