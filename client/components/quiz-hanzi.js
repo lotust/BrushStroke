@@ -21,6 +21,9 @@ const styles = theme => ({
     marginTop: '10vh',
     marginBottom: '10vh',
     padding: 10
+  },
+  width: {
+    maxWidth: 270
   }
 })
 
@@ -35,12 +38,15 @@ class HanziQuiz extends Component {
       element.removeChild(element.firstChild)
     }
     this.props.updateReview({...this.state.quizScore})
-    // this.hanziload()
   }
   hanziload = {
     load: () => {
       let word = this.props.reviews[0]
       let character = word.character.split('')
+      const element = document.getElementById('character-target-div')
+      while (element.firstChild) {
+        element.removeChild(element.firstChild)
+      }
       character.forEach(elem => {
         const writer = HanziWriter.create('character-target-div', elem, {
           width: 270,
@@ -77,10 +83,10 @@ class HanziQuiz extends Component {
   }
   render() {
     const {pinyin, definition} = this.props.reviews[0]
-    const {button, container} = this.props.classes
+    const {button, container, width} = this.props.classes
     return (
       <div className={container}>
-        <Paper id="character-target-div" />
+        <Paper id="character-target-div" className={width} />
         <br />
         <br />
         <Typography variant="h6" component="h3">
@@ -100,9 +106,11 @@ class HanziQuiz extends Component {
         </Typography>
         <br />
         <br />
-        <Button type="submit" className={button} onClick={this.nextCard}>
-          Next Card
-        </Button>
+        {this.state.quizScore.char ? (
+          <Button type="submit" className={button} onClick={this.nextCard}>
+            Next Card
+          </Button>
+        ) : null}
       </div>
     )
   }

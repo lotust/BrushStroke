@@ -33,9 +33,22 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const word = await Reviews.findOne({
+      where: {
+        userId: req.user.id,
+        character: req.params.id
+      }
+    })
+    res.status(200).json(word)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
-    console.log('req.body: ', req.body)
     const newReview = await Reviews.create({
       character: req.body.char,
       factor: req.body.factor,
@@ -51,7 +64,6 @@ router.post('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
   try {
-    console.log(req.body)
     const [numberOfAffectedRows, affectedRows] = await Reviews.update(
       {
         factor: req.body.factor,

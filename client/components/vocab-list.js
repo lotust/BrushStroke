@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getReviewsThunk, updateReviewThunk} from '../store/reviews'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
@@ -50,7 +51,11 @@ const VocabList = props => {
           {props.reviews.map(word => {
             return (
               <TableRow key={word.id} className={classes.row}>
-                <TableCell className={classes.character}>
+                <TableCell
+                  className={classes.character}
+                  component={Link}
+                  to={`/learn/${word.character}`}
+                >
                   {word.character}
                 </TableCell>
                 <TableCell className={classes.pinyin}>{word.pinyin}</TableCell>
