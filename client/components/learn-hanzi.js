@@ -25,6 +25,10 @@ const styles = theme => ({
     marginTop: '10vh',
     marginBottom: '10vh',
     padding: 10
+  },
+  width: {
+    maxWidth: 270,
+    alignItems: 'center'
   }
 })
 
@@ -45,6 +49,10 @@ class LearnHanzi extends Component {
   }
   hanziload = {
     load: () => {
+      const element = document.getElementById('character-target-div')
+      while (element.firstChild) {
+        element.removeChild(element.firstChild)
+      }
       let character = this.state.word.character.split('')
       character.forEach(elem => {
         const writer = HanziWriter.create('character-target-div', elem, {
@@ -77,15 +85,26 @@ class LearnHanzi extends Component {
     this.setState({word: data})
     this.hanziload.load()
   }
+
+  async componentDidUpdate(prevProps) {
+    if (
+      prevProps.match.params.character !== this.props.match.params.character
+    ) {
+      const char = this.props.match.params.character
+      const {data} = await axios.get(`/api/reviews/${char}`)
+      this.setState({word: data})
+      this.hanziload.load()
+    }
+  }
   handleClose = () => {
     this.setState({open: false})
   }
   render() {
     const {pinyin, definition} = this.state.word
-    const {button, container} = this.props.classes
+    const {button, container, width} = this.props.classes
     return (
       <div className={container}>
-        <Paper id="character-target-div" />
+        <Paper id="character-target-div" className={width} />
         <br />
         <br />
         <Typography variant="h6" component="h3">

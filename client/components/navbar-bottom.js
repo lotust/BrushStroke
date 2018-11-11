@@ -36,7 +36,7 @@ class SimpleBottomNavigation extends React.Component {
   }
 
   handleClickOpen = () => {
-    return this.state.isLoggedIn ? this.setState({open: true}) : null
+    return this.props.isLoggedIn ? this.setState({open: true}) : null
   }
 
   handleClose = () => {
@@ -44,7 +44,7 @@ class SimpleBottomNavigation extends React.Component {
   }
 
   handleSearchParams = evt => {
-    this.setState({searchParams: evt.target.value, open: false})
+    this.setState({searchParams: evt.target.value})
   }
 
   render() {
@@ -102,6 +102,7 @@ class SimpleBottomNavigation extends React.Component {
               Cancel
             </Button>
             <Button
+              onClick={this.handleClose}
               component={Link}
               to={`/learn/${this.state.searchParams}`}
               color="primary"
@@ -124,5 +125,4 @@ const mapState = state => {
     isLoggedIn: !!state.user.id
   }
 }
-
 export default withStyles(styles)(connect(mapState)(SimpleBottomNavigation))
