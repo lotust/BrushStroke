@@ -23,7 +23,8 @@ const styles = theme => ({
     padding: 10
   },
   width: {
-    maxWidth: 270
+    maxWidth: 270,
+    alignItems: 'center'
   }
 })
 

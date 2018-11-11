@@ -14,6 +14,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 const styles = {
   root: {
@@ -35,7 +36,7 @@ class SimpleBottomNavigation extends React.Component {
   }
 
   handleClickOpen = () => {
-    this.setState({open: true})
+    return this.props.isLoggedIn ? this.setState({open: true}) : null
   }
 
   handleClose = () => {
@@ -43,7 +44,7 @@ class SimpleBottomNavigation extends React.Component {
   }
 
   handleSearchParams = evt => {
-    this.setState({searchParams: evt.target.value, open: false})
+    this.setState({searchParams: evt.target.value})
   }
 
   render() {
@@ -101,6 +102,7 @@ class SimpleBottomNavigation extends React.Component {
               Cancel
             </Button>
             <Button
+              onClick={this.handleClose}
               component={Link}
               to={`/learn/${this.state.searchParams}`}
               color="primary"
@@ -118,4 +120,9 @@ SimpleBottomNavigation.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(SimpleBottomNavigation)
+const mapState = state => {
+  return {
+    isLoggedIn: !!state.user.id
+  }
+}
+export default withStyles(styles)(connect(mapState)(SimpleBottomNavigation))
