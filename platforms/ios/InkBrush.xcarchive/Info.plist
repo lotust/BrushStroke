@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ApplicationProperties</key>
+	<dict>
+		<key>ApplicationPath</key>
+		<string>Applications/InkBrush.app</string>
+		<key>CFBundleIdentifier</key>
+		<string>com.lotust.inkbrush</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1.0.0</string>
+		<key>CFBundleVersion</key>
+		<string>1.0.0</string>
+		<key>SigningIdentity</key>
+		<string>iPhone Developer: ltan93@gmail.com (5B54UL9926)</string>
+		<key>Team</key>
+		<string>BN95WH2A9X</string>
+	</dict>
+	<key>ArchiveVersion</key>
+	<integer>2</integer>
+	<key>CreationDate</key>
+	<date>2018-11-11T06:59:18Z</date>
+	<key>Name</key>
+	<string>InkBrush</string>
+	<key>SchemeName</key>
+	<string>InkBrush</string>
+</dict>
+</plist>
