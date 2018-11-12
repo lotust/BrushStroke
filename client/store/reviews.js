@@ -34,7 +34,7 @@ export const clearReviews = () => {
 
 export const getReviewsThunk = () => async dispatch => {
   try {
-    const {data} = await axios.get('/api/reviews')
+    const {data} = await axios.get('http://localhost:8080/api/reviews')
     dispatch(getReviews(data))
   } catch (err) {
     console.error(err)
@@ -43,7 +43,10 @@ export const getReviewsThunk = () => async dispatch => {
 
 export const addReviewThunk = quizdata => async dispatch => {
   try {
-    const {data} = await axios.post('/api/reviews', quizdata)
+    const {data} = await axios.post(
+      'http://localhost:8080/api/reviews',
+      quizdata
+    )
     dispatch(addReview(data))
   } catch (err) {
     console.error(err)
@@ -52,7 +55,10 @@ export const addReviewThunk = quizdata => async dispatch => {
 
 export const updateReviewThunk = quizdata => async dispatch => {
   try {
-    const {data} = await axios.put('/api/reviews', quizdata)
+    const {data} = await axios.put(
+      'http://localhost:8080/api/reviews',
+      quizdata
+    )
     console.log(quizdata)
     dispatch(updateReview(data))
   } catch (err) {

@@ -2050,7 +2050,7 @@ var getReviewsThunk = function getReviewsThunk() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _axios.default.get('/api/reviews');
+                return _axios.default.get('http://localhost:8080/api/reviews');
 
               case 3:
                 _ref2 = _context.sent;
@@ -2096,7 +2096,7 @@ var addReviewThunk = function addReviewThunk(quizdata) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return _axios.default.post('/api/reviews', quizdata);
+                return _axios.default.post('http://localhost:8080/api/reviews', quizdata);
 
               case 3:
                 _ref4 = _context2.sent;
@@ -2142,7 +2142,7 @@ var updateReviewThunk = function updateReviewThunk(quizdata) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return _axios.default.put('/api/reviews', quizdata);
+                return _axios.default.put('http://localhost:8080/api/reviews', quizdata);
 
               case 3:
                 _ref6 = _context3.sent;
@@ -2270,7 +2270,7 @@ var me = function me() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _axios.default.get('/auth/me');
+                return _axios.default.get('http://localhost:8080/auth/me');
 
               case 3:
                 res = _context.sent;
@@ -2314,7 +2314,7 @@ var auth = function auth(email, password, method) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return _axios.default.post("/auth/".concat(method), {
+                return _axios.default.post("http://localhost:8080/auth/".concat(method), {
                   email: email,
                   password: password
                 });
@@ -2370,7 +2370,7 @@ var logout = function logout() {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return _axios.default.post('/auth/logout');
+                return _axios.default.post('http://localhost:8080/auth/logout');
 
               case 3:
                 dispatch(removeUser());
