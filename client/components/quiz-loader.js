@@ -14,7 +14,8 @@ const styles = theme => ({
 
 class QuizLoader extends Component {
   async componentDidMount() {
-    await this.props.getReviews()
+    console.log('hi component mounted with props: ', this.props)
+    await this.props.getReviews(this.props.user.id)
   }
   render() {
     const {classes} = this.props
@@ -27,13 +28,14 @@ class QuizLoader extends Component {
 }
 
 const mapStateToProps = state => {
-  return {reviews: state.reviews}
+  return {reviews: state.reviews, user: state.user}
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getReviews() {
-      dispatch(getReviewsThunk())
+    getReviews(id) {
+      console.log('hi get reviews was called: ')
+      dispatch(getReviewsThunk(id))
     }
   }
 }

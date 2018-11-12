@@ -2,9 +2,9 @@ const router = require('express').Router()
 const {User, Reviews, DictionaryHSK1} = require('../db/models')
 const fs = require('fs')
 
-router.get('/', async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
-    let reviews = await Reviews.findAll({where: {userId: req.user.id}})
+    let reviews = await Reviews.findAll({where: {userId: req.params.userId}})
     if (!reviews || reviews.length <= 0) {
       fs.readFile('script/dictionaryHSK1.json', async (err, data) => {
         if (err) throw err
@@ -15,13 +15,13 @@ router.get('/', async (req, res, next) => {
             factor: 1.5,
             schedule: 1.5,
             isRepeatAgain: true,
-            userId: req.user.id,
+            userId: req.params.userId,
             pinyin: char.TonalPinYin,
             definition: char.Definition
           })
         })
         setTimeout(async () => {
-          reviews = await Reviews.findAll({where: {userId: req.user.id}})
+          reviews = await Reviews.findAll({where: {userId: req.params.userId}})
           res.json(reviews)
         }, 4)
       })
@@ -33,19 +33,19 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
-  try {
-    const word = await Reviews.findOne({
-      where: {
-        userId: req.user.id,
-        character: req.params.id
-      }
-    })
-    res.status(200).json(word)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/:id', async (req, res, next) => {
+//   try {
+//     const word = await Reviews.findOne({
+//       where: {
+//         userId: req.user.id,
+//         character: req.params.id
+//       }
+//     })
+//     res.status(200).json(word)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.post('/', async (req, res, next) => {
   try {

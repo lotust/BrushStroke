@@ -1259,10 +1259,11 @@ function (_Component) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return this.props.getReviews();
+                console.log('hi component mounted with props: ', this.props);
+                _context.next = 3;
+                return this.props.getReviews(this.props.user.id);
 
-              case 2:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -1293,14 +1294,16 @@ function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    reviews: state.reviews
+    reviews: state.reviews,
+    user: state.user
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    getReviews: function getReviews() {
-      dispatch((0, _reviews.getReviewsThunk)());
+    getReviews: function getReviews(id) {
+      console.log('hi get reviews was called: ');
+      dispatch((0, _reviews.getReviewsThunk)(id));
     }
   };
 };
@@ -2035,7 +2038,7 @@ var clearReviews = function clearReviews() {
 
 exports.clearReviews = clearReviews;
 
-var getReviewsThunk = function getReviewsThunk() {
+var getReviewsThunk = function getReviewsThunk(userId) {
   return (
     /*#__PURE__*/
     function () {
@@ -2050,7 +2053,7 @@ var getReviewsThunk = function getReviewsThunk() {
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return _axios.default.get('http://localhost:8080/api/reviews');
+                return _axios.default.get("http://localhost:8080/api/reviews/".concat(Number(userId)));
 
               case 3:
                 _ref2 = _context.sent;

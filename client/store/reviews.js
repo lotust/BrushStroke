@@ -32,9 +32,11 @@ export const clearReviews = () => {
   }
 }
 
-export const getReviewsThunk = () => async dispatch => {
+export const getReviewsThunk = userId => async dispatch => {
   try {
-    const {data} = await axios.get('http://localhost:8080/api/reviews')
+    const {data} = await axios.get(
+      `http://localhost:8080/api/reviews/${Number(userId)}`
+    )
     dispatch(getReviews(data))
   } catch (err) {
     console.error(err)
