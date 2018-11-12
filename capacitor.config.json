@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.brushstrokes",
+  "appName": "BrushStrokes",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

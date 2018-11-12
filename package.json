@@ -37,6 +37,9 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@capacitor/cli": "^1.0.0-beta.8",
+    "@capacitor/core": "^1.0.0-beta.8",
+    "@capacitor/ios": "^1.0.0-beta.8",
     "@material-ui/core": "^3.4.0",
     "@material-ui/icons": "^3.0.1",
     "axios": "^0.15.3",
