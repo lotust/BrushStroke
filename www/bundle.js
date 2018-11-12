@@ -424,6 +424,10 @@ var styles = function styles(theme) {
       marginTop: '10vh',
       marginBottom: '10vh',
       padding: 10
+    },
+    width: {
+      maxWidth: 270,
+      alignItems: 'center'
     }
   };
 };
@@ -466,6 +470,12 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "hanziload", {
       load: function load() {
+        var element = document.getElementById('character-target-div');
+
+        while (element.firstChild) {
+          element.removeChild(element.firstChild);
+        }
+
         var character = _this.state.word.character.split('');
 
         character.forEach(function (elem) {
@@ -542,6 +552,47 @@ function (_Component) {
       };
     }()
   }, {
+    key: "componentDidUpdate",
+    value: function () {
+      var _componentDidUpdate = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(prevProps) {
+        var char, _ref2, data;
+
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(prevProps.match.params.character !== this.props.match.params.character)) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                char = this.props.match.params.character;
+                _context2.next = 4;
+                return _axios.default.get("/api/reviews/".concat(char));
+
+              case 4:
+                _ref2 = _context2.sent;
+                data = _ref2.data;
+                this.setState({
+                  word: data
+                });
+                this.hanziload.load();
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      return function componentDidUpdate(_x) {
+        return _componentDidUpdate.apply(this, arguments);
+      };
+    }()
+  }, {
     key: "render",
     value: function render() {
       var _this$state$word = this.state.word,
@@ -549,11 +600,13 @@ function (_Component) {
           definition = _this$state$word.definition;
       var _this$props$classes = this.props.classes,
           button = _this$props$classes.button,
-          container = _this$props$classes.container;
+          container = _this$props$classes.container,
+          width = _this$props$classes.width;
       return _react.default.createElement("div", {
         className: container
       }, _react.default.createElement(_Paper.default, {
-        id: "character-target-div"
+        id: "character-target-div",
+        className: width
       }), _react.default.createElement("br", null), _react.default.createElement("br", null), _react.default.createElement(_Typography.default, {
         variant: "h6",
         component: "h3"
@@ -705,7 +758,7 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleClickOpen", function () {
-      return _this.state.isLoggedIn ? _this.setState({
+      return _this.props.isLoggedIn ? _this.setState({
         open: true
       }) : null;
     });
@@ -719,8 +772,7 @@ function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "handleSearchParams", function (evt) {
       _this.setState({
-        searchParams: evt.target.value,
-        open: false
+        searchParams: evt.target.value
       });
     });
 
@@ -770,6 +822,7 @@ function (_React$Component) {
         onClick: this.handleClose,
         color: "primary"
       }, "Cancel"), _react.default.createElement(_Button.default, {
+        onClick: this.handleClose,
         component: _reactRouterDom.Link,
         to: "/learn/".concat(this.state.searchParams),
         color: "primary"
@@ -966,7 +1019,8 @@ var styles = function styles(theme) {
       padding: 10
     },
     width: {
-      maxWidth: 270
+      maxWidth: 270,
+      alignItems: 'center'
     }
   };
 };
